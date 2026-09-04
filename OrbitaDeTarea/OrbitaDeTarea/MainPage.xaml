@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:OrbitaDeTarea.Components"
+             x:Class="OrbitaDeTarea.MainPage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- TITLE -->
+
+            <Label
+                Text="Team Task Board"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Órbita de Tarea"
+                FontSize="16"
+                HorizontalOptions="Center"
+                TextColor="Gray" />
+
+            <!-- FILTER BAR -->
+
+            <Border
+                Padding="10"
+                StrokeShape="RoundRectangle 10">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="Filters"
+                        FontSize="18"
+                        FontAttributes="Bold" />
+
+                    <Picker
+                        x:Name="pickerAssigneeFilter"
+                        Title="Filter by assignee"
+                        SelectedIndexChanged="FilterChanged">
+
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>All</x:String>
+                                <x:String>Antonio</x:String>
+                                <x:String>Paola</x:String>
+                                <x:String>Jhoseline</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+
+                    </Picker>
+
+                    <Picker
+                        x:Name="pickerPriorityFilter"
+                        Title="Filter by priority"
+                        SelectedIndexChanged="FilterChanged">
+
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>All</x:String>
+                                <x:String>High</x:String>
+                                <x:String>Medium</x:String>
+                                <x:String>Low</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+
+                    </Picker>
+
+                    <Button
+                        Text="Clear filters"
+                        Clicked="Button_Clicked_3" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- ADD TASK -->
+
+            <Button
+                Text="+ Add Task"
+                FontAttributes="Bold"
+                Clicked="Button_Clicked" />
+
+            <!-- TASK FORM -->
+
+            <Border
+                x:Name="taskForm"
+                IsVisible="False"
+                Padding="15"
+                StrokeShape="RoundRectangle 10">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        x:Name="formTitle"
+                        Text="Add Task"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Entry
+                        x:Name="txtTitle"
+                        Placeholder="Task title" />
+
+                    <Editor
+                        x:Name="txtDescription"
+                        Placeholder="Task description"
+                        HeightRequest="100" />
+
+                    <Picker
+                        x:Name="pickerAssignee"
+                        Title="Select assignee">
+
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Antonio</x:String>
+                                <x:String>Paola</x:String>
+                                <x:String>Jhoseline</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+
+                    </Picker>
+
+                    <Picker
+                        x:Name="pickerPriority"
+                        Title="Select priority">
+
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>High</x:String>
+                                <x:String>Medium</x:String>
+                                <x:String>Low</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+
+                    </Picker>
+
+                    <Picker
+                        x:Name="pickerColumn"
+                        Title="Select column">
+
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>To do</x:String>
+                                <x:String>In progress</x:String>
+                                <x:String>Done</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+
+                    </Picker>
+
+                    <HorizontalStackLayout Spacing="10">
+
+                        <Button
+                            Text="Save Task"
+                            Clicked="Button_Clicked_1" />
+
+                        <Button
+                            Text="Cancel"
+                            Clicked="Button_Clicked_2" />
+
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- BOARD -->
+
+            <Grid
+                ColumnDefinitions="*,*,*"
+                ColumnSpacing="10">
+
+                <!-- TO DO -->
+
+                <Border
+                    Grid.Column="0"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 10">
+
+                    <VerticalStackLayout>
+
+                        <Label
+                            Text="To do"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center" />
+
+                        <Label
+                            x:Name="lblToDoCount"
+                            Text="0 tasks"
+                            HorizontalOptions="Center"
+                            TextColor="Gray" />
+
+                        <CollectionView
+                            x:Name="toDoList"
+                            ItemsLayout="VerticalList">
+
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <components:TaskCard
+                                        EditClicked="TaskCard_EditClicked"
+                                        DeleteClicked="TaskCard_DeleteClicked"
+                                        MoveClicked="TaskCard_MoveClicked" />
+
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <!-- IN PROGRESS -->
+
+                <Border
+                    Grid.Column="1"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 10">
+
+                    <VerticalStackLayout>
+
+                        <Label
+                            Text="In progress"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center" />
+
+                        <Label
+                            x:Name="lblInProgressCount"
+                            Text="0 tasks"
+                            HorizontalOptions="Center"
+                            TextColor="Gray" />
+
+                        <CollectionView
+                            x:Name="inProgressList"
+                            ItemsLayout="VerticalList">
+
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <components:TaskCard
+                                        EditClicked="TaskCard_EditClicked"
+                                        DeleteClicked="TaskCard_DeleteClicked"
+                                        MoveClicked="TaskCard_MoveClicked" />
+
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <!-- DONE -->
+
+                <Border
+                    Grid.Column="2"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 10">
+
+                    <VerticalStackLayout>
+
+                        <Label
+                            Text="Done"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center" />
+
+                        <Label
+                            x:Name="lblDoneCount"
+                            Text="0 tasks"
+                            HorizontalOptions="Center"
+                            TextColor="Gray" />
+
+                        <CollectionView
+                            x:Name="doneList"
+                            ItemsLayout="VerticalList">
+
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <components:TaskCard
+                                        EditClicked="TaskCard_EditClicked"
+                                        DeleteClicked="TaskCard_DeleteClicked"
+                                        MoveClicked="TaskCard_MoveClicked" />
+
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </Grid>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+
+</ContentPage>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitaDeTarea.Components.TaskCard">
+    <Border
+        Padding="12"
+        Margin="5"
+        StrokeShape="RoundRectangle 10"
+        BackgroundColor="White">
+
+        <VerticalStackLayout Spacing="7">
+
+            <Label
+                Text="{Binding Title}"
+                FontSize="17"
+                FontAttributes="Bold"
+                TextColor="Black" />
+
+            <Label
+                Text="{Binding Description}"
+                FontSize="13"
+                TextColor="Gray" />
+
+            <Label
+                Text="{Binding Assignee, StringFormat='Assigned to: {0}'}"
+                FontSize="12"
+                TextColor="Black" />
+
+            <Label
+                Text="{Binding Priority, StringFormat='Priority: {0}'}"
+                FontSize="12"
+                FontAttributes="Bold"
+                TextColor="{Binding PriorityColor}" />
+
+            <HorizontalStackLayout Spacing="5">
+
+                <Button
+                    Text="Edit"
+                    FontSize="11"
+                    Clicked="Button_Clicked" />
+
+                <Button
+                    Text="Delete"
+                    FontSize="11"
+                    Clicked="Button_Clicked_1" />
+
+                <Button
+                    Text="Move"
+                    FontSize="11"
+                    Clicked="Button_Clicked_2" />
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+    </Border>
+</ContentView>
